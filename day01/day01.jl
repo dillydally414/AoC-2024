@@ -2,8 +2,21 @@ using Test
 
 function part1(file::AbstractString)::AbstractString
   s = read(file, String);
+  left, right = [], []
 
-  s
+  for (i, num) in enumerate(split(s))
+    if i % 2 == 0
+      push!(left, parse(Int, num))
+    else
+      push!(right, parse(Int, num))
+    end
+  end
+
+  left, right = sort(left), sort(right)
+
+  distances = sum([abs(r - l) for (l, r) in zip(left, right)])
+
+  "$distances"
 end
 
 function testPart1() 
@@ -20,9 +33,26 @@ function runPart1()
 end
 
 function part2(file::AbstractString)::AbstractString
-  s = read(file);
+  s = read(file, String);
+  left = []
+  counts = Dict{Int64,Int64}()
 
-  s
+  for (i, num) in enumerate(split(s))
+    n = parse(Int, num)
+    if i % 2 == 0
+      push!(left, n)
+    else
+      if haskey(counts, n)
+        counts[n] = counts[n] + 1
+      else
+        counts[n] = 1
+      end
+    end
+  end
+
+  similarity = sum([l * counts[l] for l in left if haskey(counts, l)])
+
+  "$similarity"
 end
 
 function testPart2() 
@@ -40,6 +70,6 @@ end
 
 
 
-testPart1()
+runPart2()
 
 

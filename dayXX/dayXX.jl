@@ -20,7 +20,7 @@ function runPart1()
 end
 
 function part2(file::AbstractString)::AbstractString
-  s = read(file);
+  s = read(file, String);
 
   s
 end
